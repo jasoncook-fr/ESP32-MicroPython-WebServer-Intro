@@ -2,8 +2,8 @@ import network
 from utime import sleep
 
 #wlan name and password
-ssid = "stumo"
-password = "thinkdifferent"
+ssid = "YourSSID"
+password = "yourPassword"
 
 #create instance of network object
 station = network.WLAN(network.STA_IF)
