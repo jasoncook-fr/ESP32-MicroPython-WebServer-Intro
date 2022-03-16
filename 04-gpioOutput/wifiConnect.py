@@ -2,8 +2,8 @@ import network
 from utime import sleep
 
 def connect():
-    ssid = "DOME_RDS"
-    password = "Eq3Dom51319"
+    ssid = "yourSSID"
+    password = "yourPassword"
     station = network.WLAN(network.STA_IF)
     station.active(True)
     station.connect(ssid, password)

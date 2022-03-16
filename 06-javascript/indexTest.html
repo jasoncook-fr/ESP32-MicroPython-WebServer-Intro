@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>WebSocket Client</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			.slidecontainer {
+				width: 100%;
+			}
+
+			.slider {
+				-webkit-appearance: none;
+				width: 40%;
+				height: 25px;
+				background: #d3d3d3;
+				outline: none;
+				opacity: 0.7;
+				-webkit-transition: .2s;
+				transition: opacity .2s;
+			}
+
+			.slider:hover {
+				opacity: 1;
+			}
+
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 25px;
+				height: 25px;
+				background: #4CAF50;
+				cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+				width: 25px;
+				height: 25px;
+				background: #4CAF50;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="response">(Received content)</div>
+
+		<div class="slidecontainer">
+			<input type="range" min="0" max="255" value="0" class="slider" id="rangeLedA">
+			<p>Value: <span id="valLedA"></span></p>
+			<input type="range" min="0" max="255" value="0" class="slider" id="rangeLedB">
+			<p>Value: <span id="valLedB"></span></p>
+			<input type="range" min="0" max="255" value="0" class="slider" id="rangeLedC">
+			<p>Value: <span id="valLedC"></span></p>
+			<input type="range" min="0" max="1023" value="0" class="slider" id="rangeMotorA">
+			<p>Value: <span id="valMotorA"></span></p>
+			<input type="range" min="0" max="1023" value="0" class="slider" id="rangeMotorB">
+			<p>Value: <span id="valMotorB"></span></p>
+		</div>
+
+		<p><button onclick="buttonFunction()">Click Me</button></p>
+
+		<div id="myDIV">Hello</div>
+		<script>
+			var ws = new WebSocket("ws://" + location.hostname + ":80");
+			var sliderLedA = document.getElementById("rangeLedA");
+			var outputLedA = document.getElementById("valLedA");
+			var sliderLedB = document.getElementById("rangeLedB");
+			var outputLedB = document.getElementById("valLedB");
+			var sliderLedC = document.getElementById("rangeLedC");
+			var outputLedC = document.getElementById("valLedC");
+			var sliderMotorA = document.getElementById("rangeMotorA");
+			var outputMotorA = document.getElementById("valMotorA");
+			var sliderMotorB = document.getElementById("rangeMotorB");
+			var outputMotorB = document.getElementById("valMotorB");
+
+
+			var conVals = ["0", "0", "0", "0", "0", "0", "0", "0", "0"];
+			outputLedA.innerHTML = sliderLedA.value; 
+			outputLedB.innerHTML = sliderLedB.value; 
+			outputLedC.innerHTML = sliderLedC.value; 
+			outputMotorA.innerHTML = sliderMotorA.value; 
+			outputMotorB.innerHTML = sliderMotorB.value; 
+
+			ws.onopen = function () {
+				ws.send("Hello");
+			};
+
+			ws.onmessage = function (evt) {
+				document.getElementById("response").innerHTML = evt.data;
+			};
+			sliderLedA.oninput = function() {
+				outputLedA.innerHTML = this.value;
+				conVals[0] = this.value;
+				ws.send(conVals);
+			}
+
+			sliderLedB.oninput = function() {
+				outputLedB.innerHTML = this.value;
+				conVals[1] = this.value;
+				ws.send(conVals);
+			}
+
+			sliderLedC.oninput = function() {
+				outputLedC.innerHTML = this.value;
+				conVals[2] = this.value;
+				ws.send(conVals);
+			}
+
+			sliderMotorA.oninput = function() {
+				outputMotorA.innerHTML = this.value;
+				conVals[3] = this.value;
+				ws.send(conVals);
+			}
+
+			sliderMotorB.oninput = function() {
+				outputMotorB.innerHTML = this.value;
+				conVals[4] = this.value;
+				ws.send(conVals);
+			}
+
+                        function buttonFunction() {
+				  var x = document.getElementById("myDIV");
+				  if (x.innerHTML === "Hello") {
+				    x.innerHTML = "Swapped text!";
+				  } else {
+				    x.innerHTML = "Hello";
+				  }
+			}
+
+		</script>
+	</body>
+</html>

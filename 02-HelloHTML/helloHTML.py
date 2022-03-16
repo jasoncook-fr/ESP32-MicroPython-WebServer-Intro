@@ -5,8 +5,8 @@ import socket
 myMesg = "HELLO THIS IS A TEST"
 
 def wifiConnect():
-    ssid = "DOME_RDS"
-    password = "Eq3Dom51319"
+    ssid = "yourSSID"
+    password = "yourPASSWORD"
     station = network.WLAN(network.STA_IF)
     station.active(True)
     station.connect(ssid, password)
