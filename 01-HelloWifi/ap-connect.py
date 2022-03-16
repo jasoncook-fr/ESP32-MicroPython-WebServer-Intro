@@ -6,11 +6,11 @@ verify that the device appears available as a wireless network.
 from utime import sleep
 import network
 
-# change network name and password to your choosing
+#change network name and password to your choosing
 ssid = 'MCU'
 password = '12345'
 
-#create an instance of the object
+#create an instance of network object
 ap = network.WLAN(network.AP_IF)
 
 #activate the network
@@ -18,13 +18,13 @@ ap.active(True)
 #configure characteristics of the network
 ap.config(essid=ssid, password=password)
 
-#wait until netwrok is established
+#wait until network is established
 while ap.active() == False:
     print('.', end='')
     sleep(.1)
 
 #print out IP information
-print('Connection successful')
+print("\n ---- Connection successful ----")
 print(ap.ifconfig())
 ipData = ap.ifconfig()
 print("my IP address is: ", ipData[0])
